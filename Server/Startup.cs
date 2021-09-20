@@ -33,7 +33,7 @@ namespace dotnetGrpc
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "Clients/WebClientApp/build";
+                configuration.RootPath = "../Clients/WebClientApp/build";
             });
         }
 
@@ -68,7 +68,7 @@ namespace dotnetGrpc
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "Clients/WebClientApp";
+                spa.Options.SourcePath = "../Clients/WebClientApp";
 
                 if (env.IsDevelopment())
                 {
