@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Hosting;
@@ -21,11 +22,21 @@ namespace dotnetGrpc
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.ConfigureKestrel(options =>
+                    // MACOS doesn't support tls over http2
+                    // 5001 over https for webapi
+                    // 5000 over http for grpc
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        options.ListenLocalhost(5001, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2);
-                        options.ListenLocalhost(5000, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
-                    });
+                        webBuilder.ConfigureKestrel(options =>
+                        {
+                            options.ListenLocalhost(5001, o =>
+                            {
+                                o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+                                o.UseHttps();
+                            });
+                            options.ListenLocalhost(5000, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
+                        });
+                    }
                     webBuilder.UseStartup<Startup>();
                 });
     }

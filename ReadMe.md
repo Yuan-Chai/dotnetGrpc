@@ -1,0 +1,4 @@
+- Created using dotnet core react redux template
+- Uses concurrent dictionary to simulate db
+- Webapi running side by side with grpc on the server
+- Includes a grpc client to update data in db

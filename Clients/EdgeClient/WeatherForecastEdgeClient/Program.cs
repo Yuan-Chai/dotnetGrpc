@@ -12,6 +12,7 @@ namespace WeatherForecastEdgeClient
     {
         static async Task Main(string[] args)
         {
+            // using http endpoint since MACOS doesn't support tls over http2
             var address = "http://localhost:5000";
 
             using var channel = GrpcChannel.ForAddress(address);
