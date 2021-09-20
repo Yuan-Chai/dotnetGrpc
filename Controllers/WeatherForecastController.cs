@@ -15,9 +15,9 @@ namespace dotnetGrpc.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IWeatherForcastService _service;
+        private readonly IWeatherForecastService _service;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForcastService weatherForcastService)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastService weatherForcastService)
         {
             _logger = logger;
             _service = weatherForcastService;

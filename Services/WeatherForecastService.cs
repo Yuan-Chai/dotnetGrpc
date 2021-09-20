@@ -5,17 +5,17 @@ using dotnetGrpc.Repositories;
 
 namespace dotnetGrpc.Services
 {
-    public interface IWeatherForcastService
+    public interface IWeatherForecastService
     {
         Task Save(WeatherForecast data);
         Task<IEnumerable<WeatherForecast>> GetAll();
     }
 
-    public class WeatherForcastService : IWeatherForcastService
+    public class WeatherForecastService : IWeatherForecastService
     {
         private readonly IWeatherForecastRepository _weatherForecastRepository;
 
-        public WeatherForcastService(IWeatherForecastRepository weatherForecastRepository)
+        public WeatherForecastService(IWeatherForecastRepository weatherForecastRepository)
         {
             _weatherForecastRepository = weatherForecastRepository;
         }

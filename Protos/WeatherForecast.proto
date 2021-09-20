@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "dotnetGrpc.Protos";
+
+
+service WeatherForecastEdgeService {
+  rpc Report(WeatherForecastEdgeRequest) returns (WeatherForecastEdgeResponse);
+}
+
+message WeatherForecastEdgeRequest {
+  string id = 1;
+  google.protobuf.Timestamp date = 2;
+  int32 temperature_c = 3;
+}
+
+message WeatherForecastEdgeResponse {
+  bool success = 1;
+}

@@ -10,7 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.39.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\WeatherForecast.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
