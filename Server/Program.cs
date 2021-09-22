@@ -23,8 +23,6 @@ namespace dotnetGrpc
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     // MACOS doesn't support tls over http2
-                    // 5001 over https for webapi
-                    // 5000 over http for grpc
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
                         webBuilder.ConfigureKestrel(options =>
@@ -32,7 +30,6 @@ namespace dotnetGrpc
                             options.ListenLocalhost(5001, o =>
                             {
                                 o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
-                                o.UseHttps();
                             });
                             options.ListenLocalhost(5000, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
                         });

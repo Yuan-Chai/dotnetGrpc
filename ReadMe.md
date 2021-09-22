@@ -2,3 +2,4 @@
 - Uses concurrent dictionary to simulate db
 - Webapi running side by side with grpc on the server
 - Includes a grpc client to update data in db
+- Added sigalR to reflect records been added

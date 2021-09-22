@@ -32,9 +32,14 @@ interface ReceiveWeatherForecastsAction {
     forecasts: WeatherForecast[];
 }
 
+interface ServerWeatherForecastsAction {
+    type: 'SERVER_WEATHER_FORECASTS';
+    forecast: WeatherForecast;
+}
+
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction;
+type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction | ServerWeatherForecastsAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -85,6 +90,11 @@ export const reducer: Reducer<WeatherForecastsState> = (state: WeatherForecastsS
                 };
             }
             break;
+        case 'SERVER_WEATHER_FORECASTS': 
+            return {
+                ...state,
+                forecasts: [...state.forecasts, action.forecast],
+            };
     }
 
     return state;

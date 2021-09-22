@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using dotnetGrpc.Hubs;
 using dotnetGrpc.Repositories;
 
 namespace dotnetGrpc.Services
@@ -14,10 +15,12 @@ namespace dotnetGrpc.Services
     public class WeatherForecastService : IWeatherForecastService
     {
         private readonly IWeatherForecastRepository _weatherForecastRepository;
+        private readonly WeatherForecastHub _hub;
 
-        public WeatherForecastService(IWeatherForecastRepository weatherForecastRepository)
+        public WeatherForecastService(IWeatherForecastRepository weatherForecastRepository, WeatherForecastHub hub)
         {
             _weatherForecastRepository = weatherForecastRepository;
+            _hub = hub;
         }
 
         public async Task<IEnumerable<WeatherForecast>> GetAll()
@@ -28,6 +31,7 @@ namespace dotnetGrpc.Services
         public async Task Save(WeatherForecast data)
         {
             await _weatherForecastRepository.Save(data);
+            await _hub.NewForecast(data);
         }
     }
 }

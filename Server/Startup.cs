@@ -1,11 +1,9 @@
-using dotnetGrpc.Protos;
+using dotnetGrpc.Hubs;
 using dotnetGrpc.Repositories;
 using dotnetGrpc.Services;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,10 +25,12 @@ namespace dotnetGrpc
         {
             services.AddControllersWithViews();
             services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+            services.AddScoped<WeatherForecastHub, WeatherForecastHub>();
             services.AddSingleton<IWeatherForecastRepository, WeatherForecastRepository>();
 
             services.AddGrpc();
             // In production, the React files will be served from this directory
+            services.AddSignalR();
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
@@ -64,6 +64,8 @@ namespace dotnetGrpc
                     pattern: "{controller}/{action=Index}/{id?}");
 
                 endpoints.MapGrpcService<WeatherForecastEdgeServiceImpl>();
+
+                endpoints.MapHub<WeatherForecastHub>("/hub");
             });
 
             app.UseSpa(spa =>
